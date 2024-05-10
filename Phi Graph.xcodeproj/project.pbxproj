@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D80A0482BEBC71900953B45 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A0472BEBC71900953B45 /* GraphView.swift */; };
+		9D80A04B2BEBC79000953B45 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A04A2BEBC79000953B45 /* Node.swift */; };
+		9D80A04E2BEBC7FB00953B45 /* Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A04D2BEBC7FB00953B45 /* Physics.swift */; };
+		9D80A0512BEC291300953B45 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A0502BEC291300953B45 /* NodeView.swift */; };
+		9D80A0532BEC2DCF00953B45 /* EdgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A0522BEC2DCF00953B45 /* EdgeView.swift */; };
+		9D80A0552BEC644500953B45 /* NodeEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A0542BEC644500953B45 /* NodeEditView.swift */; };
 		9D99B9302BE2D639009D8010 /* Phi_GraphApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99B92F2BE2D639009D8010 /* Phi_GraphApp.swift */; };
 		9D99B9322BE2D639009D8010 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99B9312BE2D639009D8010 /* ContentView.swift */; };
 		9D99B9342BE2D63A009D8010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D99B9332BE2D63A009D8010 /* Assets.xcassets */; };
@@ -36,6 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D80A0472BEBC71900953B45 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		9D80A04A2BEBC79000953B45 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		9D80A04D2BEBC7FB00953B45 /* Physics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Physics.swift; sourceTree = "<group>"; };
+		9D80A0502BEC291300953B45 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
+		9D80A0522BEC2DCF00953B45 /* EdgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeView.swift; sourceTree = "<group>"; };
+		9D80A0542BEC644500953B45 /* NodeEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEditView.swift; sourceTree = "<group>"; };
 		9D99B92C2BE2D639009D8010 /* Phi Graph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Phi Graph.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D99B92F2BE2D639009D8010 /* Phi_GraphApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phi_GraphApp.swift; sourceTree = "<group>"; };
 		9D99B9312BE2D639009D8010 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +88,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D80A0492BEBC77400953B45 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9D80A04A2BEBC79000953B45 /* Node.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9D80A04C2BEBC7ED00953B45 /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				9D80A04D2BEBC7FB00953B45 /* Physics.swift */,
+			);
+			path = Physics;
+			sourceTree = "<group>";
+		};
+		9D80A04F2BEBCA4700953B45 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D80A0472BEBC71900953B45 /* GraphView.swift */,
+				9D80A0502BEC291300953B45 /* NodeView.swift */,
+				9D80A0522BEC2DCF00953B45 /* EdgeView.swift */,
+				9D80A0542BEC644500953B45 /* NodeEditView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9D99B9232BE2D639009D8010 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +138,9 @@
 		9D99B92E2BE2D639009D8010 /* Phi Graph */ = {
 			isa = PBXGroup;
 			children = (
+				9D80A04F2BEBCA4700953B45 /* Views */,
+				9D80A04C2BEBC7ED00953B45 /* Physics */,
+				9D80A0492BEBC77400953B45 /* Entities */,
 				9D99B92F2BE2D639009D8010 /* Phi_GraphApp.swift */,
 				9D99B9312BE2D639009D8010 /* ContentView.swift */,
 				9D99B9332BE2D63A009D8010 /* Assets.xcassets */,
@@ -265,9 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D80A0552BEC644500953B45 /* NodeEditView.swift in Sources */,
+				9D80A0532BEC2DCF00953B45 /* EdgeView.swift in Sources */,
+				9D80A0482BEBC71900953B45 /* GraphView.swift in Sources */,
 				9D99B93C2BE2D63A009D8010 /* Phi_Graph.xcdatamodeld in Sources */,
+				9D80A0512BEC291300953B45 /* NodeView.swift in Sources */,
 				9D99B9392BE2D63A009D8010 /* Persistence.swift in Sources */,
+				9D80A04B2BEBC79000953B45 /* Node.swift in Sources */,
 				9D99B9322BE2D639009D8010 /* ContentView.swift in Sources */,
+				9D80A04E2BEBC7FB00953B45 /* Physics.swift in Sources */,
 				9D99B9302BE2D639009D8010 /* Phi_GraphApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

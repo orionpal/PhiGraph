@@ -4,85 +4,93 @@
 //
 //  Created by Orion Palaquibay on 5/1/24.
 //
-
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @State private var nodes: [Node] = [
+            Node(id: 1, label: "Node 1", position: CGPoint(x: 50, y: 100), connectedNodeIds: [2]),
+            Node(id: 2, label: "Node 2", position: CGPoint(x: 150, y: 200), connectedNodeIds: [1])
+        ]
+    
+    @State private var isEditPresented = false
+    @State private var selectedNodeId: Int?
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
+        NavigationStack{
+            ZStack {
+                EdgeView(nodes: $nodes)
+                
+                ForEach($nodes) { node in
+                    NodeView(node: node, isSelected: node.id == selectedNodeId)
+                        .onTapGesture {
+                            self.handleNodeSelection(newSelectedNode: node)
+                        }
                 }
-                .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    Button(action: addNode) {
+                        Label("Add Node", systemImage: "plus")
                     }
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Edit") {
+                        isEditPresented = true
+                    }
+                    .disabled(selectedNodeId == nil)
+                }
             }
-            Text("Select an item")
+            .sheet(isPresented: $isEditPresented) {
+                            if let selectedNodeIndex = nodes.firstIndex(where: { $0.id == selectedNodeId }) {
+                                NodeEditView(node: $nodes[selectedNodeIndex], allNodes: $nodes)
+                            }
+                        }
+            .background(Color.black)
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    private func handleNodeSelection(newSelectedNode: Binding<Node>) {
+            if let currentNodeId = selectedNodeId {
+                // If node is already selected, unselect it
+                if currentNodeId == newSelectedNode.id {
+                    selectedNodeId = nil
+                } // If node is not connected to the selected node, connect them
+                else if !newSelectedNode.wrappedValue.connectedNodeIds.contains(currentNodeId){
+                    if let currentNode = getNode(nodeId: currentNodeId){
+                        currentNode.wrappedValue.connectedNodeIds.append(newSelectedNode.id)
+                        newSelectedNode.wrappedValue.connectedNodeIds.append(currentNodeId)
+                    }
+                } // Otherwise just select new node
+                else {
+                    selectedNodeId = newSelectedNode.id
+                }
+            } // if nothing is selected
+            else {
+                selectedNodeId = newSelectedNode.id
             }
         }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+    
+    private func getNode(nodeId: Int) -> Binding<Node>?{
+        if let nodeIndex = nodes.firstIndex(where: { $0.id == nodeId }) {
+            return $nodes[nodeIndex]
         }
+        return nil
     }
+    
+    private func addNode() {
+        let newNode = Node(id: nodes.count + 1, label: "Node \(nodes.count + 1)", position: CGPoint(x: 100, y: 100), connectedNodeIds: [])
+        nodes.append(newNode)
+    }
+    
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }
